@@ -82,7 +82,7 @@ def describe_dataset(path):
             'Max':pd.Series(max_values),
             'Count':pd.Series(count_values),
             'Min':pd.Series(min_values),
-            'std':pd.Series(std_values),
+            'Std':pd.Series(std_values),
             '25%':pd.Series(first_quartile),
             '50%':pd.Series(median),
             '75%':pd.Series(third_quartile)
@@ -101,4 +101,6 @@ if __name__=='__main__':
         sys.exit()
     path = sys.argv[1]
     df = describe_dataset(path)
+    #transpose dataframe
+    df = df.T
     print(df)
