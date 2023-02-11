@@ -50,7 +50,7 @@ def percentile(data, percent):
     # index = int(percent * (len(data) -1))
     # print(index)
     # return round(data[index], 6)
-    return np.percentile(data, 25)
+    return np.percentile(data, percent*100)
 
 def describe_dataset(path):
     try:
@@ -58,20 +58,24 @@ def describe_dataset(path):
         df = pd.read_csv(path)
       
         numerical_columns = df.select_dtypes(include=[np.number])
-        mean_values  = {}
-        max_values   = {}
-        count_values = {}
-        min_values   = {}
-        std_values   = {}
-        first_quartile ={}
+        mean_values     = {}
+        max_values      = {}
+        count_values    = {}
+        min_values      = {}
+        std_values      = {}
+        first_quartile  = {}
+        median          = {}
+        third_quartile  = {}
 
         for col in numerical_columns:
-            mean_values[col] = mean(df[col])
-            max_values[col] = max(df[col])
-            count_values[col] = count(df[col])
-            min_values[col] = min(df[col])
-            std_values[col] = std(df[col])
+            mean_values[col]    = mean(df[col])
+            max_values[col]     = max(df[col])
+            count_values[col]   = count(df[col])
+            min_values[col]     = min(df[col])
+            std_values[col]     = std(df[col])
             first_quartile[col] = percentile(df[col], 0.25)
+            median[col]         = percentile(df[col], 0.50)
+            third_quartile[col] = percentile(df[col], 0.75)
         #index = ['mean', 'count', 'min', 'max']
         data = {
             'Mean':pd.Series(mean_values),
@@ -79,12 +83,13 @@ def describe_dataset(path):
             'Count':pd.Series(count_values),
             'Min':pd.Series(min_values),
             'std':pd.Series(std_values),
-            '25%':pd.Series(first_quartile)
-            #'50%':
-            #'75%':
+            '25%':pd.Series(first_quartile),
+            '50%':pd.Series(median),
+            '75%':pd.Series(third_quartile)
         }
-        print(pd.DataFrame(data))
-        print(df.describe())
+        return pd.DataFrame(data)
+        # print(pd.DataFrame(data))
+        # print(df.describe())
     except Exception as e:
         print(f"Error : An exception occured {e}")
         sys.exit()
@@ -95,4 +100,5 @@ if __name__=='__main__':
         print("Error : Invalid path or missing dataset. Please provide a valid path to the dataset and try again.")
         sys.exit()
     path = sys.argv[1]
-    describe_dataset(path)
+    df = describe_dataset(path)
+    print(df)
