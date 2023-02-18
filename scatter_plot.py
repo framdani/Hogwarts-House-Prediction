@@ -4,9 +4,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from histogram import load_dataset, prepare_numerical_columns
-
+import seaborn as sns
 def plot_scatter(df):
-    # numerical_columns = prepare_numerical_columns(df)
+    numerical_columns = prepare_numerical_columns(df)
     # Create a subplot for each feature
     # n_features = numerical_columns.shape[1]
     ### To print all the plots into one figure
@@ -26,11 +26,12 @@ def plot_scatter(df):
     #             counter+=1
     col1 = df['Astronomy']
     col2 = df['Defense Against the Dark Arts']
-    plt.scatter(col1, col2)
-    plt.xlabel(col1.name)
-    plt.ylabel(col2.name)
-    plt.title('Scatter plot of Astronomy vs Defense Against the Dark Arts')
-    #plt.tight_layout()
+    sns.scatterplot(data=df, x = 'Astronomy', y = 'Defense Against the Dark Arts', hue='Hogwarts House')
+    # plt.scatter(col1, col2)
+    # plt.xlabel(col1.name)
+    # plt.ylabel(col2.name)
+    # plt.title('Scatter plot of Astronomy vs Defense Against the Dark Arts')
+    # #plt.tight_layout()
     plt.show() 
    
 if __name__=='__main__':
