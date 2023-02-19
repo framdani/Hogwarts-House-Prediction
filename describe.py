@@ -11,7 +11,7 @@ class Describer():
             raise ValueError('Empty DataFrame')
     
     def exclude_nan_columns(self) -> pd.DataFrame :
-        return self.df.select_dtypes(include=['int', 'float'])
+        return self.df.select_dtypes(include=[numpy.number])
     
     def describe(self) -> pd.DataFrame :
         element = {column: numpy.nan for column in ['count', 'mean', 'std']}
