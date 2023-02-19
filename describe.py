@@ -36,9 +36,13 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('Error : Invalid number of arguments')
         exit(1)
-    describer = Describer(sys.argv[1])
-    describer.df = describer.exclude_nan_columns()
-    print(describer.describe())
+    try:
+        describer = Describer(sys.argv[1])
+        describer.df = describer.exclude_nan_columns()
+        print(describer.describe())
+    except ValueError as e:
+        print('Error : ' + str(e))
+        exit(1)
     
 
     # print(describer.df.describe())
