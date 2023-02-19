@@ -14,11 +14,10 @@ class Describer():
         return self.df.select_dtypes(include=[numpy.number])
     
     def describe(self) -> pd.DataFrame :
-        element = {column: numpy.nan for column in ['count', 'mean', 'std']}
         data = {}
         for col_name, col_data in self.df.iteritems():
             col_data = helpers.manual_sort(col_data)
-            data[col_name] = element.copy()
+            data[col_name] = {}
             data[col_name]['count'] = helpers.count(col_data)
             data[col_name]['mean'] = helpers.mean(col_data)
             data[col_name]['std'] = helpers.std(col_data)
