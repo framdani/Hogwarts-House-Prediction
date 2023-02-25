@@ -1,12 +1,8 @@
-
-# Determine Which Hogwarts course has a homogenous score distribution between all four houses
-# Investigate if the distribution of scores is alike among the different groups; the four houses in Hogwarts
-# Answer : Arithmacy | Care of magical creatures
-
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
 import pandas as pd
+import argparse
 
 def load_dataset(path):
     df = pd.read_csv(path)
@@ -17,7 +13,7 @@ def prepare_numerical_columns(df):
     numerical_columns = numerical_columns.drop(columns=['Index'])
     return numerical_columns
 
-def plot_histogram(df):
+def plot_histograms_for_all_courses(df):
     numerical_columns = prepare_numerical_columns(df)
     groupes = df.groupby("Hogwarts House")
     courses = numerical_columns.columns
@@ -35,8 +31,43 @@ def plot_histogram(df):
             axs[i].legend()
     plt.show()
 
+def plot_course_histogram_by_house(df, course):
+    valid_cols= prepare_numerical_columns(df).columns
+    if course not in valid_cols:
+        raise Exception(f'{course} is not a valid course name.')
+
+    Hufflepuff  = df[df['Hogwarts House'] == 'Hufflepuff'][course]
+    Ravenclaw   = df[df['Hogwarts House'] == 'Ravenclaw'][course]  
+    Gryffindor  = df[df['Hogwarts House'] == 'Gryffindor'][course]
+    Slytherin   = df[df['Hogwarts House'] == 'Slytherin'][course]
+
+    n_rows = 1
+    n_cols = 4
+    fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 15), tight_layout=True)
+    axs = axs.ravel()
+    houses = ['Hufflepuff', 'Ravenclaw', 'Gryffindor', 'Slytherin']
+    for i, house in enumerate(houses):
+        data=eval(house)
+        axs[i].hist(data,bins=10, alpha=0.9, color='Green')
+        axs[i].set_title(house)
+    
+    plt.xlabel(course)
+    plt.ylabel('count')
+    plt.suptitle(f'Scores of {course} scores by House')
+    plt.show()
 
 if __name__=='__main__':
-    path = 'datasets/dataset_train.csv'
-    df = load_dataset(path)
-    plot_histogram(df)
+    try:
+        path = 'datasets/dataset_train.csv'
+        df = load_dataset(path)
+        parser = argparse.ArgumentParser(description='Plot histograms for Hogwarts courses by house')
+        parser.add_argument('--course',type=str, default=None, help='Name of the course to plot histogram for')
+        args=parser.parse_args()
+        
+        if args.course:
+            plot_course_histogram_by_house(df, args.course)
+        else:
+            plot_histograms_for_all_courses(df)
+            
+    except Exception as e:
+        print(f"An exception occured : {e} ")

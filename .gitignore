@@ -130,3 +130,6 @@ dmypy.json
 
 
 .DS_Store
+
+logistic_regressin.py
+logreg_train.py
