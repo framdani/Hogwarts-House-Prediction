@@ -13,6 +13,10 @@ def pair_plot(df):
     plt.show()
 
 if __name__=='__main__':
-    path = 'datasets/dataset_train.csv'
-    df = load_dataset(path)
-    pair_plot(df)
+    try:
+        path = 'datasets/dataset_train.csv'
+        df = load_dataset(path)
+        pair_plot(df)
+    except Exception as e:
+        print(f"An Exception occured : {e}")
+        
