@@ -1,5 +1,3 @@
-# Look for features that look strongly associated with a particular house
-# if for example data point of a particular house is clustered in one area of the plot
 
 import matplotlib.pyplot as plt
 import numpy as np

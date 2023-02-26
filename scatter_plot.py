@@ -16,13 +16,11 @@ def plot_scatter(df):
    
     fig, axs = plt.subplots(n_rows, n_columns, figsize=(18,20))
     axs=axs.flatten()
-    # print(axs.shape)
     for col1 in numerical_columns.columns:
         for col2 in numerical_columns.columns:
             if col1 != col2 and counter < 66:
                 sns.scatterplot(x=numerical_columns[col1], y=numerical_columns[col2], hue=df['Hogwarts House'], ax = axs[counter])
                 counter+=1
-    # 
     plt.tight_layout()
     plt.show()
 

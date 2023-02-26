@@ -21,8 +21,6 @@ def plot_histograms_for_all_courses(df):
     n_rows = int(np.ceil(n_courses/4))
     n_cols = 4
     fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 15), tight_layout=True)
-    
-    #enumerate can only loop over a 1D array
     axs = axs.ravel()
     for i, course in enumerate(courses):
         for j, (name, group) in enumerate(groupes):
