@@ -32,7 +32,8 @@ class Describer():
 
         describe_df = pd.DataFrame.from_dict(data, orient='columns')\
                 .applymap(lambda x: x if x != 0 else "{:.1f}".format(x))\
-                .applymap(lambda x: x if not isinstance(x, numbers.Number) else "{:.06f}".format(x))
+                .applymap(lambda x: x if not isinstance(x, numbers.Number) else "{:.06f}".format(x))\
+                .applymap(lambda x: 'NaN' if x == 'nan' else x)
         return describe_df
 
 if __name__ == '__main__':
