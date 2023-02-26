@@ -26,6 +26,9 @@ class Describer():
             data[col_name]['50%'] = helpers.percentile(col_data, 50)
             data[col_name]['75%'] = helpers.percentile(col_data, 75)
             data[col_name]['max'] = helpers.max(col_data)
+            data[col_name]['missing values'] = helpers.missing_values(col_data)
+            data[col_name]['mode'] = helpers.mode(col_data)
+            data[col_name]['range'] = helpers._range(data[col_name]['min'], data[col_name]['max'])
 
         describe_df = pd.DataFrame.from_dict(data, orient='columns')\
                 .applymap(lambda x: x if x != 0 else "{:.1f}".format(x))\

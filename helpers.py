@@ -96,3 +96,25 @@ def max(column_data):
     if clean_data:
         return clean_data[-1]
     return numpy.nan
+
+def missing_values(column_data):
+    return len([elem for elem in column_data if math.isnan(elem)])
+
+def mode(column_data):
+    clean_data = [elem for elem in column_data if not math.isnan(elem)]
+    if not clean_data:
+        return numpy.nan
+    counts = {}
+    for elem in clean_data:
+        if elem in counts:
+            counts[elem] += 1
+        else:
+            counts[elem] = 1
+    max_count = max(manual_sort(list(set(counts.values())))) # :sadge:
+    modes = [key for key, value in counts.items() if value == max_count]
+    return min(modes)
+
+def _range(min, max):
+    if any(math.isnan(elem) for elem in [min, max]):
+        return numpy.nan
+    return max - min
