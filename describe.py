@@ -44,11 +44,9 @@ if __name__ == '__main__':
         describer = Describer(sys.argv[1])
         describer.df = describer.exclude_nan_columns()
         print(describer.describe())
-    except ValueError as e:
+    except Exception as e:
         print('Error : ' + str(e))
         exit(1)
-    
-
     # print(describer.df.describe())
 
     # print('equals' if describer.df.describe().applymap(lambda x: x if x != 0 else "{:.1f}".format(x))\
